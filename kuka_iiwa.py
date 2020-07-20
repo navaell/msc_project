@@ -16,15 +16,14 @@ numJoints = p.getNumJoints(robot)
 p.setRealTimeSimulation(0)
 
 kukaEndEffectorIndex = 6
-pos = [0,1,1]
-orientation = p.getQuaternionFromEuler([0, 0., 0.])
-
+pos = [1,1,1]
+orientation = p.getQuaternionFromEuler([3.14, 0., 0.])
 jointPoses = p.calculateInverseKinematics(robot, kukaEndEffectorIndex, pos, targetOrientation = orientation)
-
-
 
 for i in range(numJoints):
     p.setJointMotorControl2(bodyIndex=robot, jointIndex=i, controlMode=p.POSITION_CONTROL, targetPosition=jointPoses[i])
+
+
 for _ in range(300):
     p.stepSimulation()
     time.sleep(1./10.)
