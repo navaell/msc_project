@@ -50,6 +50,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button resetButton = findViewById(R.id.reset_button);
+        resetButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View vi){
+                Intent intent = new Intent(vi.getContext(), LightSensorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button sensorButton = findViewById(R.id.motion_sensor_button);
+        sensorButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View vie){
+                Intent intent = new Intent(vie.getContext(), MotionSensorActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
