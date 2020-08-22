@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LogoActivity extends AppCompatActivity {
 
+    private static final int DELAY_MS = 4000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +18,6 @@ public class LogoActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             final Intent intent = new Intent(LogoActivity.this, MainActivity.class);
             startActivity(intent);
-        }, 5000);
+        }, DELAY_MS);
     }
 }

@@ -6,14 +6,20 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.suke.widget.SwitchButton;
 
 public class LightSensorActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mLight;
     private TextView textView;
+
+    private boolean isToggleEnabled = false;
 
     @Override
     public final void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,22 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         mLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         textView = (TextView)findViewById(R.id.sensor_data);
 
+        final SwitchButton switchButton = findViewById(R.id.toggle);
+        switchButton.setOnCheckedChangeListener((view, isChecked) -> {
+            isToggleEnabled = isChecked;
+
+            textView.setText("N/A");
+        });
+
+        final ImageView infoButton = findViewById(R.id.info);
+        infoButton.setOnClickListener(v -> new AlertDialog.Builder(this)
+                .setTitle("Info")
+                .setMessage("Info Message Content")
+                .setPositiveButton("Dismiss", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show()
+        );
     }
 
     @Override
@@ -33,12 +55,14 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
 
     @Override
     public final void onSensorChanged(SensorEvent event) {
-        // The light sensor returns a single value.
-        // Many sensors return 3 values, one for each axis.
-        float lux = event.values[0];
-        // Do something with this sensor value.
+        if (isToggleEnabled) {
+            // The light sensor returns a single value.
+            // Many sensors return 3 values, one for each axis.
+            float lux = event.values[0];
+            // Do something with this sensor value.
 
-        textView.setText(Float.toString(lux));
+            textView.setText(Float.toString(lux));
+        }
     }
 
     @Override

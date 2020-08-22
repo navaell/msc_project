@@ -1,10 +1,11 @@
 package com.example.msc;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.msc.models.InverseKinematicsModel;
 import com.example.msc.models.RequestType;
@@ -23,7 +24,8 @@ public class InverseKinematicsActivity extends AppCompatActivity {
     private Gson gson;
 
     private final MessageListenerHandler clientMessageHandler = new MessageListenerHandler(
-            messageBody -> { },
+            messageBody -> {
+            },
             MessageListenerHandler.PAYLOAD_KEY);
 
     @Override
@@ -31,9 +33,7 @@ public class InverseKinematicsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inverse_kinematics);
         final Button button = findViewById(R.id.submit);
-        button.setOnClickListener(v -> {
-            new ZeroMQMessageTask(clientMessageHandler).execute(getTaskInput());
-        });
+        button.setOnClickListener(v -> new ZeroMQMessageTask(clientMessageHandler).execute(getTaskInput()));
 
         xCoord = findViewById(R.id.acoord_text);
         yCoord = findViewById(R.id.ycoord_text);
@@ -41,6 +41,16 @@ public class InverseKinematicsActivity extends AppCompatActivity {
         aOrient = findViewById(R.id.alpha_text);
         bOrient = findViewById(R.id.beta_text);
         cOrient = findViewById(R.id.theta_text);
+
+        final ImageView infoButton = findViewById(R.id.info);
+        infoButton.setOnClickListener(v -> new AlertDialog.Builder(this)
+                .setTitle("Info")
+                .setMessage("Info Message Content")
+                .setPositiveButton("Dismiss", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show()
+        );
 
         gson = new GsonBuilder().create();
 
@@ -57,6 +67,6 @@ public class InverseKinematicsActivity extends AppCompatActivity {
                 Double.parseDouble(cOrient.getText().toString())
         );
 
-       return gson.toJson(model);
+        return gson.toJson(model);
     }
 }
