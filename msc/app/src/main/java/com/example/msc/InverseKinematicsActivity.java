@@ -3,6 +3,7 @@ package com.example.msc;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +34,13 @@ public class InverseKinematicsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inverse_kinematics);
         final Button button = findViewById(R.id.submit);
-        button.setOnClickListener(v -> new ZeroMQMessageTask(clientMessageHandler).execute(getTaskInput()));
+        button.setOnClickListener(v -> {
+            try {
+                new ZeroMQMessageTask(clientMessageHandler).execute(getTaskInput());
+            } catch (Exception e) {
+                Toast.makeText(this, "Please enter valid values!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         xCoord = findViewById(R.id.acoord_text);
         yCoord = findViewById(R.id.ycoord_text);

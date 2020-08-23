@@ -47,6 +47,7 @@ kukaEndEffectorIndex = 6
 numJoints = p.getNumJoints(robot)
 p.setRealTimeSimulation(0)
 
+
 def execute_inverse_kinematics(x,y,z,alpha,theta, psy):
     pos = [x,y,z]
     orientation = p.getQuaternionFromEuler([alpha,theta, psy])
@@ -61,7 +62,7 @@ while True:
         receivedNewKinematics = False
         execute_inverse_kinematics(newKinematics[0], newKinematics[1], newKinematics[2], newKinematics[3], newKinematics[4], newKinematics[5])
     p.stepSimulation()
-    time.sleep(1./10.)
+    #time.sleep(1./10.)
 
 p.disconnect()
 

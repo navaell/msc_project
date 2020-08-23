@@ -1,7 +1,6 @@
 package com.example.msc.motion;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import com.suke.widget.SwitchButton;
 public class MotionSensorActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
-    private Sensor rotationSensor;
 
     private final Gson gson = new GsonBuilder().create();
 
@@ -30,10 +28,6 @@ public class MotionSensorActivity extends AppCompatActivity {
 
     private final MessageListenerHandler clientMessageHandler = new MessageListenerHandler(messageBody -> {
     }, MessageListenerHandler.PAYLOAD_KEY);
-
-
-
-
 
 
     @Override
@@ -46,7 +40,6 @@ public class MotionSensorActivity extends AppCompatActivity {
                 .create(MotionSensorViewModel.class);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
         final TextView textView1 = findViewById(R.id.motion_sensor_data1);
         final TextView textView2 = findViewById(R.id.motion_sensor_data2);
@@ -55,7 +48,7 @@ public class MotionSensorActivity extends AppCompatActivity {
         viewModel.getxLiveData().observe(this, newValue -> textView1.setText(newValue));
         viewModel.getyLiveData().observe(this, newValue -> textView3.setText(newValue));
         viewModel.getzLiveData().observe(this, newValue -> textView2.setText(newValue));
-        viewModel.getCombinedColour().observe(this, newColour ->{
+        viewModel.getCombinedColour().observe(this, newColour -> {
             textView1.setTextColor(newColour);
             textView2.setTextColor(newColour);
             textView3.setTextColor(newColour);
@@ -83,7 +76,9 @@ public class MotionSensorActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(viewModel.getSensorEventListener(), rotationSensor, SensorManager.SENSOR_DELAY_GAME);
+        final Sensor orientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        sensorManager.registerListener(viewModel.getSensorEventListener(), orientation,
+                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override

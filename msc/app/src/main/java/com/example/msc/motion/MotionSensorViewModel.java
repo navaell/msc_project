@@ -24,60 +24,58 @@ public class MotionSensorViewModel extends ViewModel {
 
     private final MutableLiveData<InverseKinematicsModel> inverseKinematicsModelLiveData = new MutableLiveData<>();
 
-    private int radianToHex2PIRange(double x){
-        double range = 2*Math.PI;
-        double unit = range/255;
-        int rgbNubmer = (int) (x/unit);
+    private int radianToHex2PIRange(double x) {
+        double range = 2 * Math.PI;
+        double unit = range / 255;
+        int rgbNubmer = (int) ((x + Math.PI) / unit);
         return rgbNubmer;
     }
 
-    private int radianToHexPIRange(double x){
+    private int radianToHexPIRange(double x) {
         double range = Math.PI;
-        double unit = range/255;
-        int rgbNubmer = (int) (x/unit);
+        double unit = range / 255;
+        int rgbNubmer = (int) ((x + (Math.PI / 2)) / unit);
         return rgbNubmer;
     }
 
-    private int combinedColourFromRadianValues (double x, double y, double z){
-        int xRGB = radianToHexPIRange(x);
+    private int combinedColourFromRadianValues(double x, double y, double z) {
+        int xRGB = radianToHex2PIRange(x);
         int yRGB = radianToHex2PIRange(y);
-        int zRGB = radianToHex2PIRange(z);
+        int zRGB = radianToHexPIRange(z);
         return Color.argb(255, xRGB, yRGB, zRGB);
     }
 
     private final SensorEventListener sensorEventListener = new SensorEventListener() {
         private int count = 0;
 
-
         @Override
         public void onSensorChanged(SensorEvent event) {
-            if (toggleEnabled) {
-                final double x = (((event.values[0] + Math.PI) +  (3 * Math.PI / 2)) % (2 * Math.PI)) - Math.PI;
+            if (toggleEnabled && count % 2 == 0) {
+                final double x =  event.values[0];//(((event.values[0] + Math.PI) +  (3 * Math.PI / 2)) % (2 * Math.PI)) - Math.PI;
                 final double y = event.values[1];
-                final double z = event.values[2];
+                final double z = 0 - event.values[2];
 
-                combinedColour.setValue(combinedColourFromRadianValues(x,y,z));
+                combinedColour.setValue(combinedColourFromRadianValues(x, y, z));
 
                 xLiveData.setValue(String.format(Locale.UK, "%.3f", x));
                 yLiveData.setValue(String.format(Locale.UK, "%.3f", y));
                 zLiveData.setValue(String.format(Locale.UK, "%.3f", z));
 
-                if (count % 10 == 0) {
-                    final InverseKinematicsModel newModel = new InverseKinematicsModel(
-                            RequestType.INVERSE_KINEMATICS,
-                            0.5,
-                            0.5,
-                            0.5,
-                            x,
-                            z,
-                            y);
+                final InverseKinematicsModel newModel = new InverseKinematicsModel(
+                        RequestType.INVERSE_KINEMATICS,
+                        0.5,
+                        0.5,
+                        0.5,
+                        x,
+                        z,
+                        y);
 
-                    inverseKinematicsModelLiveData.setValue(newModel);
-                }
-
-                count++;
+                inverseKinematicsModelLiveData.setValue(newModel);
             }
+
+            count++;
         }
+
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
