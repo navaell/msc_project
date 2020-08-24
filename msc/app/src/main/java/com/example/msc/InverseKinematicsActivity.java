@@ -1,5 +1,7 @@
 package com.example.msc;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,10 +53,14 @@ public class InverseKinematicsActivity extends AppCompatActivity {
 
         final ImageView infoButton = findViewById(R.id.info);
         infoButton.setOnClickListener(v -> new AlertDialog.Builder(this)
-                .setTitle("Info")
-                .setMessage("Info Message Content")
-                .setPositiveButton("Dismiss", (dialog, which) -> {
+                .setTitle("Information")
+                .setMessage(getString(R.string.inverse_kinematics_info_message))
+                .setPositiveButton(R.string.ok_got_it, (dialog, which) -> {
                     dialog.dismiss();
+                })
+                .setNegativeButton(R.string.need_more_help, (dialog, which) -> {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Inverse_kinematics"));
+                    startActivity(browserIntent);
                 })
                 .show()
         );

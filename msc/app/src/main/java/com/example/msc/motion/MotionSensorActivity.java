@@ -64,9 +64,9 @@ public class MotionSensorActivity extends AppCompatActivity {
 
         final ImageView infoButton = findViewById(R.id.info);
         infoButton.setOnClickListener(v -> new AlertDialog.Builder(this)
-                .setTitle("Info")
-                .setMessage("Info Message Content")
-                .setPositiveButton("Dismiss", (dialog, which) -> {
+                .setTitle("Information")
+                .setMessage(R.string.motion_sensor_info_message)
+                .setPositiveButton("OK", (dialog, which) -> {
                     dialog.dismiss();
                 })
                 .show()
@@ -78,6 +78,10 @@ public class MotionSensorActivity extends AppCompatActivity {
         super.onResume();
         final Sensor orientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         sensorManager.registerListener(viewModel.getSensorEventListener(), orientation,
+                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
+
+        final Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        sensorManager.registerListener(viewModel.getSensorEventListener(), accelerometer,
                 SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
     }
 
