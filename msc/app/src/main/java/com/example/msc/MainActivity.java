@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button connectButton = findViewById(R.id.connect_button);
         connectButton.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), ConsoleActivity.class);
+            Intent intent = new Intent(v.getContext(), AboutActivity.class);
             startActivity(intent);
         });
 

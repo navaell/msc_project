@@ -3,13 +3,23 @@ package com.example.msc;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+
+import androidx.annotation.NonNull;
+
 import org.zeromq.ZMQ;
 
 public class ZeroMQMessageTask extends AsyncTask<String, Void, String> {
     private final Handler uiThreadHandler;
+    private final Runnable onMessageSent;
 
     public ZeroMQMessageTask(Handler uiThreadHandler) {
         this.uiThreadHandler = uiThreadHandler;
+        this.onMessageSent = () -> {};
+    }
+
+    public ZeroMQMessageTask(Handler uiThreadHandler, @NonNull Runnable onMessageSent) {
+        this.uiThreadHandler = uiThreadHandler;
+        this.onMessageSent = onMessageSent;
     }
 
     @Override
@@ -24,6 +34,7 @@ public class ZeroMQMessageTask extends AsyncTask<String, Void, String> {
         socket.close();
         context.term();
 
+        onMessageSent.run();
         return result;
     }
 

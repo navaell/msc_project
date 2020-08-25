@@ -13,6 +13,7 @@ import com.example.msc.models.InverseKinematicsModel;
 import com.example.msc.models.RequestType;
 
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MotionSensorViewModel extends ViewModel {
     private static final double ACCELEROMETER_MULTIPLIER = 1;
@@ -24,6 +25,9 @@ public class MotionSensorViewModel extends ViewModel {
     private final MutableLiveData<Integer> combinedColour = new MutableLiveData<>();
 
     private final MutableLiveData<InverseKinematicsModel> inverseKinematicsModelLiveData = new MutableLiveData<>();
+
+    private final AtomicBoolean readyToSend = new AtomicBoolean(true);
+    private final Runnable onMessageSent = () -> readyToSend.set(true);
 
     private int radianToHex2PIRange(double x) {
         double range = 2 * Math.PI;
@@ -48,52 +52,37 @@ public class MotionSensorViewModel extends ViewModel {
 
     private final SensorEventListener sensorEventListener = new SensorEventListener() {
         private int count = 0;
-        private final float[] position = new float[3];
         private final float[] orientationReading = new float[3];
 
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_ORIENTATION) {
                 System.arraycopy(event.values, 0, orientationReading, 0, orientationReading.length);
-            }  else if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-                final double offsetX = event.values[0];
-                final double offsetY = event.values[1];
-                final double offsetZ = event.values[2];
-
-                position[0] += offsetX * ACCELEROMETER_MULTIPLIER;
-                position[1] += offsetY * ACCELEROMETER_MULTIPLIER;
-                position[2] += offsetZ * ACCELEROMETER_MULTIPLIER;
-
-                for (int i = 0; i < 3; i++) {
-                    if (position[i] > 1) {
-                        position[i] = 1;
-                    } else if (position[i] < 0) {
-                        position[i] = 0;
-                    }
-                }
             }
 
-            if (toggleEnabled && count % 2 == 0) {
+            if (toggleEnabled) {
                 final double x = orientationReading[0];//(((event.values[0] + Math.PI) +  (3 * Math.PI / 2)) % (2 * Math.PI)) - Math.PI;
                 final double y = orientationReading[1];
                 final double z = 0 - orientationReading[2];
 
-                //todo combinedColour.setValue(combinedColourFromRadianValues(x, y, z));
+                combinedColour.setValue(combinedColourFromRadianValues(x, y, z));
 
-                xLiveData.setValue(String.format(Locale.UK, "%.3f", position[0]));
-                yLiveData.setValue(String.format(Locale.UK, "%.3f", position[1]));
-                zLiveData.setValue(String.format(Locale.UK, "%.3f", position[2]));
+                xLiveData.setValue(String.format(Locale.UK, "%.3f°", x*180/Math.PI));
+                yLiveData.setValue(String.format(Locale.UK, "%.3f°", y*180/Math.PI));
+                zLiveData.setValue(String.format(Locale.UK, "%.3f°", z*180/Math.PI));
 
                 final InverseKinematicsModel newModel = new InverseKinematicsModel(
                         RequestType.INVERSE_KINEMATICS,
-                        position[0],
-                        position[1],
-                        position[2],
+                        0.5,
+                        0.5,
+                        0.5,
                         x,
                         z,
                         y);
 
-                inverseKinematicsModelLiveData.setValue(newModel);
+                if (readyToSend.getAndSet(false)) {
+                    inverseKinematicsModelLiveData.setValue(newModel);
+                }
             }
 
             count++;
@@ -137,5 +126,9 @@ public class MotionSensorViewModel extends ViewModel {
             yLiveData.setValue("N/A");
             zLiveData.setValue("N/A");
         }
+    }
+
+    public Runnable getOnMessageSent() {
+        return onMessageSent;
     }
 }

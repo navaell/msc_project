@@ -56,7 +56,7 @@ public class MotionSensorActivity extends AppCompatActivity {
 
         viewModel.getInverseKinematicsModelLiveData().observe(
                 this,
-                newData -> new ZeroMQMessageTask(clientMessageHandler).execute(gson.toJson(newData))
+                newData -> new ZeroMQMessageTask(clientMessageHandler, viewModel.getOnMessageSent()).execute(gson.toJson(newData))
         );
 
         final SwitchButton switchButton = findViewById(R.id.toggle);
@@ -78,10 +78,6 @@ public class MotionSensorActivity extends AppCompatActivity {
         super.onResume();
         final Sensor orientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         sensorManager.registerListener(viewModel.getSensorEventListener(), orientation,
-                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
-
-        final Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        sensorManager.registerListener(viewModel.getSensorEventListener(), accelerometer,
                 SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
     }
 
