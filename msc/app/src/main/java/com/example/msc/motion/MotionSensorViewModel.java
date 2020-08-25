@@ -58,11 +58,11 @@ public class MotionSensorViewModel extends ViewModel {
                 final double y = event.values[1];
                 final double z = event.values[2];
 
-                //combinedColour.setValue(combinedColourFromRadianValues(x, y, z));
+                combinedColour.setValue(combinedColourFromRadianValues(x, y, z));
 
-                xLiveData.setValue(String.format(Locale.UK, "%.3f", x * 180 / Math.PI));
-                yLiveData.setValue(String.format(Locale.UK, "%.3f", y * 180 / Math.PI));
-                zLiveData.setValue(String.format(Locale.UK, "%.3f", z * 180 / Math.PI));
+                xLiveData.setValue(String.format(Locale.UK, "%.3f°", x * 180 / Math.PI));
+                yLiveData.setValue(String.format(Locale.UK, "%.3f°", y * 180 / Math.PI));
+                zLiveData.setValue(String.format(Locale.UK, "%.3f°", z * 180 / Math.PI));
 
                 final InverseKinematicsModel newModel = new InverseKinematicsModel(
                         RequestType.INVERSE_KINEMATICS,
