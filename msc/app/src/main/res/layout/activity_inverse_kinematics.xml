@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="60dp"
+            android:src="@drawable/ic_nade_svg_07"
+            app:layout_constraintBottom_toTopOf="@id/topGuideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/info"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="5dp"
+            android:src="@drawable/ic_info"
+            app:layout_constraintBottom_toBottomOf="@id/topGuideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/colorAccent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topGuideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/xcoord"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inverse_kin_coordx"
+            app:helperTextEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/topGuideline"
+            app:startIconDrawable="@drawable/ic_cartesian">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/acoord_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ycoord"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inverse_kin_coordy"
+            app:layout_constraintTop_toBottomOf="@id/xcoord"
+            app:startIconDrawable="@drawable/ic_cartesian">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ycoord_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/zcoord"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inverse_kin_coordz"
+            app:helperText="@string/inverse_kin_accepted_values"
+            app:layout_constraintTop_toBottomOf="@id/ycoord"
+            app:startIconContentDescription="@string/desc"
+            app:startIconDrawable="@drawable/ic_cartesian">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/zcoord_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/alpha"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inverse_kin_alphacoord"
+            app:layout_constraintTop_toBottomOf="@id/zcoord"
+
+            app:startIconContentDescription="@string/desc"
+            app:startIconDrawable="@drawable/ic_angle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/alpha_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/beta"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inverse_kin_betacoord"
+            app:layout_constraintTop_toBottomOf="@id/alpha"
+
+            app:startIconContentDescription="@string/desc"
+            app:startIconDrawable="@drawable/ic_angle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/beta_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/theta"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inverse_kin_jamacoord"
+            app:helperText="@string/euler_desc"
+            app:layout_constraintTop_toBottomOf="@id/beta"
+
+            app:startIconContentDescription="@string/desc"
+            app:startIconDrawable="@drawable/ic_angle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/theta_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:drawableLeft="@drawable/ic_baseline_send_24"
+            android:drawableTint="@color/colorAccent"
+            android:padding="20dp"
+            android:text="submit"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/theta" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

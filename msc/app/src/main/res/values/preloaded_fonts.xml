@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/antic</item>
+        <item>@font/bungee</item>
+        <item>@font/chonburi</item>
+        <item>@font/cutive</item>
+        <item>@font/days_one</item>
+        <item>@font/rubik_mono_one</item>
+    </array>
+</resources>
