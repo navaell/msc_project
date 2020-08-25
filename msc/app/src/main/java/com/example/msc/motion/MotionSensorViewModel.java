@@ -51,25 +51,18 @@ public class MotionSensorViewModel extends ViewModel {
     }
 
     private final SensorEventListener sensorEventListener = new SensorEventListener() {
-        private int count = 0;
-        private final float[] orientationReading = new float[3];
-
         @Override
         public void onSensorChanged(SensorEvent event) {
-            if (event.sensor.getType() == Sensor.TYPE_ORIENTATION) {
-                System.arraycopy(event.values, 0, orientationReading, 0, orientationReading.length);
-            }
+            if (toggleEnabled && readyToSend.getAndSet(false)) {
+                final double x = (((event.values[0] + Math.PI) + (3 * Math.PI / 2)) % (2 * Math.PI)) - Math.PI;
+                final double y = event.values[1];
+                final double z = event.values[2];
 
-            if (toggleEnabled) {
-                final double x = orientationReading[0];//(((event.values[0] + Math.PI) +  (3 * Math.PI / 2)) % (2 * Math.PI)) - Math.PI;
-                final double y = orientationReading[1];
-                final double z = 0 - orientationReading[2];
+                //combinedColour.setValue(combinedColourFromRadianValues(x, y, z));
 
-                combinedColour.setValue(combinedColourFromRadianValues(x, y, z));
-
-                xLiveData.setValue(String.format(Locale.UK, "%.3f°", x*180/Math.PI));
-                yLiveData.setValue(String.format(Locale.UK, "%.3f°", y*180/Math.PI));
-                zLiveData.setValue(String.format(Locale.UK, "%.3f°", z*180/Math.PI));
+                xLiveData.setValue(String.format(Locale.UK, "%.3f", x * 180 / Math.PI));
+                yLiveData.setValue(String.format(Locale.UK, "%.3f", y * 180 / Math.PI));
+                zLiveData.setValue(String.format(Locale.UK, "%.3f", z * 180 / Math.PI));
 
                 final InverseKinematicsModel newModel = new InverseKinematicsModel(
                         RequestType.INVERSE_KINEMATICS,
@@ -80,12 +73,8 @@ public class MotionSensorViewModel extends ViewModel {
                         z,
                         y);
 
-                if (readyToSend.getAndSet(false)) {
-                    inverseKinematicsModelLiveData.setValue(newModel);
-                }
+                inverseKinematicsModelLiveData.setValue(newModel);
             }
-
-            count++;
         }
 
 
