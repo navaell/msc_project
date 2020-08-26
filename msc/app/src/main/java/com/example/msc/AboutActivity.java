@@ -24,24 +24,16 @@ public class AboutActivity extends Activity {
         setContentView(R.layout.activity_console);
 
         final Button docsButton = findViewById(R.id.see_docs);
-
-        docsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://pybullet.org/wordpress/"));
-                startActivity(browserIntent);
-            }
+        docsButton.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://pybullet.org/wordpress/"));
+            startActivity(browserIntent);
         });
 
 
-        final Button demoButton = findViewById(R.id.see_docs);
-
-        demoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=SbYos2z8pjI"));
-                startActivity(browserIntent);
-            }
+        final Button demoButton = findViewById(R.id.see_demo);
+        demoButton.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=SbYos2z8pjI"));
+            startActivity(browserIntent);
         });
 
 
