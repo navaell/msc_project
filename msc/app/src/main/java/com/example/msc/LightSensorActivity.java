@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.suke.widget.SwitchButton;
 
+import java.util.Locale;
+
 public class LightSensorActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mLight;
@@ -61,7 +63,7 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
             float lux = event.values[0];
             // Do something with this sensor value.
 
-            textView.setText(Float.toString(lux));
+            textView.setText(String.format(Locale.UK, "%.2f lux", lux));
         }
     }
 
