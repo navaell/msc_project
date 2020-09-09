@@ -114,6 +114,7 @@ public class MotionSensorViewModel extends ViewModel {
             xLiveData.setValue("N/A");
             yLiveData.setValue("N/A");
             zLiveData.setValue("N/A");
+            combinedColour.setValue(Color.BLACK);
         }
     }
 

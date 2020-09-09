@@ -12,8 +12,8 @@
     <string name="inverse_kin_coordx">x coord</string>
     <string name="inverse_kin_coordy">y coord</string>
     <string name="inverse_kin_coordz">z coord</string>
-    <string name="inverse_kin_accepted_values">*values should be a whole and real number</string>
-    <string name="desc">*values should be a whole and real number</string>
+    <string name="inverse_kin_accepted_values">*values should be real numbers.</string>
+    <string name="desc">*values should be floating numbers</string>
     <string name="inverse_kin_alphacoord">θ orient</string>
     <string name="inverse_kin_betacoord">ψ orient</string>
     <string name="inverse_kin_jamacoord">φ orient</string>
@@ -25,12 +25,13 @@
         Those values will then be send to the pyBullet simulation where you can see your Kuka robot at its new destination!</string>
     <string name="motion_sensor_info_message"> This screen allows us to control the orientation of the end-effector by
     simply rotating our phone! Toggle the button to start, rotate your phone and see how your robot\'s orientation is changed in pyBullet! </string>
+    <string name="light_sensor_info_message">This functionality allows you to take advantage of your phone\'s built in sensors for measuring light as Luminous flux per unit area.</string>
 
     <string name="ok_got_it">OK </string>
     <string name="need_more_help"> Need more help? </string>
 
     <string name="about_page">BulletBot is an app designed for controlling robots remotely and powered by the pyBullet simulation engine.
-        Through a simple and intuitive user interface the app enables inverse kinematics, 360deg sensor motion control and more performed in
+        Through a simple and intuitive user interface the app enables inverse kinematics, 360° robot motion control and more performed in
         real time on a pyBullet simulation of the Kuka robot. </string>
     <!--
     This string is used for square devices and overridden by hello_world in

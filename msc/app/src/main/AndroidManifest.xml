@@ -22,7 +22,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".motion.MotionSensorActivity" />
+        <activity
+            android:name=".motion.MotionSensorActivity"
+            android:screenOrientation="userPortrait" />
         <activity android:name=".LightSensorActivity" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld

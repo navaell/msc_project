@@ -1,10 +1,12 @@
 package com.example.msc;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,10 +43,14 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
 
         final ImageView infoButton = findViewById(R.id.info);
         infoButton.setOnClickListener(v -> new AlertDialog.Builder(this)
-                .setTitle("Info")
-                .setMessage("Info Message Content")
-                .setPositiveButton("Dismiss", (dialog, which) -> {
+                .setTitle("Information")
+                .setMessage(R.string.light_sensor_info_message)
+                .setPositiveButton(R.string.ok_got_it, (dialog, which) -> {
                     dialog.dismiss();
+                })
+                .setNegativeButton(R.string.need_more_help, (dialog, which) -> {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Lux"));
+                    startActivity(browserIntent);
                 })
                 .show()
         );

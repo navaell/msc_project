@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/antic"
             android:padding="10dp"
-            android:text="BulletBot is an app designed for controlling robots remotely and powered by the pyBullet simulation engine. Through a simple and intuitive user interface the app enables inverse kinematics, 360deg sensor motion control and more, performed in real time on a pyBullet simulation of the Kuka robot."
+            android:text="BulletBot is an app designed for controlling robots remotely and powered by the pyBullet simulation engine. Through a simple and intuitive user interface the app enables inverse kinematics, 360° motion control and more, performed in real time on a pyBullet simulation of the Kuka robot."
             android:textColor="@color/colorPrimary"
             android:textSize="9pt" />
 
