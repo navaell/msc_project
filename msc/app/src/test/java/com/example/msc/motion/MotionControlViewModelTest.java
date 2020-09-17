@@ -19,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MotionSensorViewModelTest {
+public class MotionControlViewModelTest {
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
@@ -33,7 +33,7 @@ public class MotionSensorViewModelTest {
 
     @Mock
     private SensorEvent sensorEvent;
-    private MotionSensorViewModel viewModel;
+    private MotionControlViewModel viewModel;
 
     @Before
     public void setUp() {
@@ -42,7 +42,7 @@ public class MotionSensorViewModelTest {
         zValues = new LinkedList<>();
         inverseKinematicsModels = new LinkedList<>();
 
-        viewModel = new MotionSensorViewModel();
+        viewModel = new MotionControlViewModel();
 
         viewModel.getxLiveData().observeForever(value -> xValues.add(value));
         viewModel.getyLiveData().observeForever(value -> yValues.add(value));

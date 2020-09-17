@@ -15,8 +15,7 @@ import com.example.msc.models.RequestType;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MotionSensorViewModel extends ViewModel {
-    private static final double ACCELEROMETER_MULTIPLIER = 1;
+public class MotionControlViewModel extends ViewModel {
     private boolean toggleEnabled = false;
 
     private final MutableLiveData<String> xLiveData = new MutableLiveData<>();
@@ -29,24 +28,18 @@ public class MotionSensorViewModel extends ViewModel {
     private final AtomicBoolean readyToSend = new AtomicBoolean(true);
     private final Runnable onMessageSent = () -> readyToSend.set(true);
 
-    private int radianToHex2PIRange(double x) {
-        double range = 2 * Math.PI;
-        double unit = range / 255;
-        int rgbNubmer = (int) ((x + Math.PI) / unit);
-        return rgbNubmer;
+    private int mapValueToColour(double value, double minValue, double maxValue) {
+        // offset into positive range
+        final double newValue = value + Math.abs(minValue);
+        final double newMaxValue = Math.abs(minValue) + maxValue;
+
+        return (int) ((newValue/newMaxValue) * 255);
     }
 
-    private int radianToHexPIRange(double x) {
-        double range = Math.PI;
-        double unit = range / 255;
-        int rgbNubmer = (int) ((x + (Math.PI / 2)) / unit);
-        return rgbNubmer;
-    }
-
-    private int combinedColourFromRadianValues(double x, double y, double z) {
-        int xRGB = radianToHex2PIRange(x);
-        int yRGB = radianToHex2PIRange(y);
-        int zRGB = radianToHexPIRange(z);
+    private int combinedColourFromRadianValues(double alpha, double gamma, double beta) {
+        int xRGB = mapValueToColour(alpha, -180, 180);
+        int yRGB = mapValueToColour(gamma, 0, 360);
+        int zRGB = mapValueToColour(beta, -90, 90);
         return Color.argb(255, xRGB, yRGB, zRGB);
     }
 
@@ -54,24 +47,33 @@ public class MotionSensorViewModel extends ViewModel {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (toggleEnabled && readyToSend.getAndSet(false)) {
-                final double x = (((event.values[0] + Math.PI) + (3 * Math.PI / 2)) % (2 * Math.PI)) - Math.PI;
-                final double y = event.values[1];
-                final double z = event.values[2];
+                final double rawAlpha = event.values[1];
+                final double alpha;
+                if (rawAlpha > 0) {
+                    alpha = 180 - rawAlpha;
+                } else {
+                    alpha = -180 - rawAlpha;
+                }
 
-                combinedColour.setValue(combinedColourFromRadianValues(x, y, z));
+                final double gamma = 360 - event.values[0];
 
-                xLiveData.setValue(String.format(Locale.UK, "%.3f°", x * 180 / Math.PI));
-                yLiveData.setValue(String.format(Locale.UK, "%.3f°", y * 180 / Math.PI));
-                zLiveData.setValue(String.format(Locale.UK, "%.3f°", z * 180 / Math.PI));
+                final double rawBeta = event.values[2];
+                final double beta = rawBeta + 90;
+
+                combinedColour.setValue(combinedColourFromRadianValues(alpha, gamma, beta));
+
+                xLiveData.setValue(String.format(Locale.UK, "%.3f°", alpha));// * 180 / Math.PI));
+                yLiveData.setValue(String.format(Locale.UK, "%.3f°", gamma));// * 180 / Math.PI));
+                zLiveData.setValue(String.format(Locale.UK, "%.3f°", beta));// * 180 / Math.PI));
 
                 final InverseKinematicsModel newModel = new InverseKinematicsModel(
                         RequestType.INVERSE_KINEMATICS,
                         0.5,
                         0.5,
                         0.5,
-                        x,
-                        z,
-                        y);
+                        (alpha * Math.PI) / 180,
+                        0,//(beta * Math.PI) / 180,
+                        (gamma * Math.PI) / 180);
 
                 inverseKinematicsModelLiveData.setValue(newModel);
             }

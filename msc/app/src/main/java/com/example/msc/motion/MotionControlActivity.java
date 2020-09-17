@@ -18,26 +18,24 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.suke.widget.SwitchButton;
 
-public class MotionSensorActivity extends AppCompatActivity {
-
-    private SensorManager sensorManager;
+public class MotionControlActivity extends AppCompatActivity {
 
     private final Gson gson = new GsonBuilder().create();
 
-    private MotionSensorViewModel viewModel;
+    private SensorManager sensorManager;
+    private MotionControlViewModel viewModel;
 
     private final MessageListenerHandler clientMessageHandler = new MessageListenerHandler(messageBody -> {
     }, MessageListenerHandler.PAYLOAD_KEY);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_motion_sensor);
+        setContentView(R.layout.activity_motion_control);
 
         viewModel = ViewModelProvider.AndroidViewModelFactory
                 .getInstance(this.getApplication())
-                .create(MotionSensorViewModel.class);
+                .create(MotionControlViewModel.class);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
@@ -46,8 +44,8 @@ public class MotionSensorActivity extends AppCompatActivity {
         final TextView textView3 = findViewById(R.id.motion_sensor_data3);
 
         viewModel.getxLiveData().observe(this, newValue -> textView1.setText(newValue));
-        viewModel.getyLiveData().observe(this, newValue -> textView3.setText(newValue));
-        viewModel.getzLiveData().observe(this, newValue -> textView2.setText(newValue));
+        viewModel.getyLiveData().observe(this, newValue -> textView2.setText(newValue));
+        viewModel.getzLiveData().observe(this, newValue -> textView3.setText(newValue));
         viewModel.getCombinedColour().observe(this, newColour -> {
             textView1.setTextColor(newColour);
             textView2.setTextColor(newColour);
@@ -78,7 +76,7 @@ public class MotionSensorActivity extends AppCompatActivity {
         super.onResume();
         final Sensor orientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         sensorManager.registerListener(viewModel.getSensorEventListener(), orientation,
-                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
+                SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override

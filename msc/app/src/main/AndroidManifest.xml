@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".motion.MotionSensorActivity"
+            android:name=".motion.MotionControlActivity"
             android:screenOrientation="userPortrait" />
         <activity android:name=".LightSensorActivity" />
         <!--

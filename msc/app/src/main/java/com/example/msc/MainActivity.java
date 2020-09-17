@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.msc.motion.MotionSensorActivity;
+import com.example.msc.motion.MotionControlActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button sensorButton = findViewById(R.id.motion_sensor_button);
         sensorButton.setOnClickListener(vie -> {
-            Intent intent = new Intent(vie.getContext(), MotionSensorActivity.class);
+            Intent intent = new Intent(vie.getContext(), MotionControlActivity.class);
             startActivity(intent);
         });
     }

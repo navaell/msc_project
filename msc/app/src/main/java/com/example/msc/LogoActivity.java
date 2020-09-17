@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LogoActivity extends AppCompatActivity {
 
-    private static final int DELAY_MS = 12000;
+    private static final int DELAY_MS = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
