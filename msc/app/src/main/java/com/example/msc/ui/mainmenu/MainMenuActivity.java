@@ -1,4 +1,4 @@
-package com.example.msc;
+package com.example.msc.ui.mainmenu;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,14 +6,18 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.msc.motion.MotionControlActivity;
+import com.example.msc.R;
+import com.example.msc.ui.about.AboutActivity;
+import com.example.msc.ui.ambientlight.AmbientLightActivity;
+import com.example.msc.ui.inversekinematics.InverseKinematicsActivity;
+import com.example.msc.ui.motion.MotionControlActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_menu);
 
         Button buttonInverseKinematics = findViewById(R.id.inverse_kinematics);
         buttonInverseKinematics.setOnClickListener(view -> {
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button resetButton = findViewById(R.id.reset_button);
         resetButton.setOnClickListener(vi -> {
-            Intent intent = new Intent(vi.getContext(), LightSensorActivity.class);
+            Intent intent = new Intent(vi.getContext(), AmbientLightActivity.class);
             startActivity(intent);
         });
 

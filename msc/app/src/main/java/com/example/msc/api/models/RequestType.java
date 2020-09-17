@@ -1,4 +1,4 @@
-package com.example.msc.models;
+package com.example.msc.api.models;
 
 import com.google.gson.annotations.SerializedName;
 

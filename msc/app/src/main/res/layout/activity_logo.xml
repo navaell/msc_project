@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_margin="20dp"
     android:textAlignment="center"
-    tools:context=".LogoActivity">
+    tools:context=".ui.logo.LogoActivity">
 
     <ImageView
         android:id="@+id/logo"

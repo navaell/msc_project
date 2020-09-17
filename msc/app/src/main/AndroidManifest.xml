@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".LogoActivity">
+        <activity android:name=".ui.logo.LogoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,21 +23,21 @@
         </activity>
 
         <activity
-            android:name=".motion.MotionControlActivity"
+            android:name=".ui.motion.MotionControlActivity"
             android:screenOrientation="userPortrait" />
-        <activity android:name=".LightSensorActivity" />
+        <activity android:name=".ui.ambientlight.AmbientLightActivity" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
         -->
         <activity
-            android:name=".AboutActivity"
+            android:name=".ui.about.AboutActivity"
             android:label="@string/title_activity_zero_m_q_test" />
         <activity
-            android:name=".InverseKinematicsActivity"
+            android:name=".ui.inversekinematics.InverseKinematicsActivity"
             android:screenOrientation="userPortrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.mainmenu.MainMenuActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
 

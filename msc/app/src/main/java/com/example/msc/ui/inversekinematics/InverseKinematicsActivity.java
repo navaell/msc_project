@@ -1,4 +1,4 @@
-package com.example.msc;
+package com.example.msc.ui.inversekinematics;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,8 +10,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.msc.models.InverseKinematicsModel;
-import com.example.msc.models.RequestType;
+import com.example.msc.R;
+import com.example.msc.api.ZeroMQMessageAsyncTask;
+import com.example.msc.api.models.InverseKinematicsModel;
+import com.example.msc.api.models.RequestType;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,11 +28,6 @@ public class InverseKinematicsActivity extends AppCompatActivity {
     private TextInputEditText cOrient;
     private Gson gson;
 
-    private final MessageListenerHandler clientMessageHandler = new MessageListenerHandler(
-            messageBody -> {
-            },
-            MessageListenerHandler.PAYLOAD_KEY);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +35,7 @@ public class InverseKinematicsActivity extends AppCompatActivity {
         final Button button = findViewById(R.id.submit);
         button.setOnClickListener(v -> {
             try {
-                new ZeroMQMessageTask(clientMessageHandler).execute(getTaskInput());
+                new ZeroMQMessageAsyncTask().execute(getTaskInput());
             } catch (Exception e) {
                 Toast.makeText(this, "Please enter valid values!", Toast.LENGTH_SHORT).show();
             }

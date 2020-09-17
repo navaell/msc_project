@@ -1,8 +1,10 @@
-package com.example.msc.models;
+package com.example.msc.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-
+/**
+ * Model which contains the position and orientation for the end-effector.
+ */
 public class InverseKinematicsModel {
     @SerializedName("type")
     private final RequestType type;
@@ -20,7 +22,13 @@ public class InverseKinematicsModel {
     @SerializedName("c_orient")
     private final double gammaOrientation;
 
-    public InverseKinematicsModel(RequestType type, double xCoordinate, double yCoordinate, double zCoordinate, double alphaOrientation, double betaOrientation, double gammaOrientation) {
+    public InverseKinematicsModel(RequestType type,
+                                  double xCoordinate,
+                                  double yCoordinate,
+                                  double zCoordinate,
+                                  double alphaOrientation,
+                                  double betaOrientation,
+                                  double gammaOrientation) {
         this.type = type;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;

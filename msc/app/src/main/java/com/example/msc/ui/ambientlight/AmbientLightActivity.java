@@ -1,4 +1,4 @@
-package com.example.msc;
+package com.example.msc.ui.ambientlight;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,11 +14,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.msc.R;
 import com.suke.widget.SwitchButton;
 
 import java.util.Locale;
 
-public class LightSensorActivity extends AppCompatActivity implements SensorEventListener {
+public class AmbientLightActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mLight;
     private TextView textView;

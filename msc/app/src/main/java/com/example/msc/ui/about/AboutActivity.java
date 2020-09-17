@@ -1,4 +1,4 @@
-package com.example.msc;
+package com.example.msc.ui.about;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.example.msc.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

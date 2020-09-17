@@ -4,7 +4,8 @@ import android.hardware.SensorEvent;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
-import com.example.msc.models.InverseKinematicsModel;
+import com.example.msc.api.models.InverseKinematicsModel;
+import com.example.msc.ui.motion.MotionControlViewModel;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,10 +45,10 @@ public class MotionControlViewModelTest {
 
         viewModel = new MotionControlViewModel();
 
-        viewModel.getxLiveData().observeForever(value -> xValues.add(value));
-        viewModel.getyLiveData().observeForever(value -> yValues.add(value));
-        viewModel.getzLiveData().observeForever(value -> zValues.add(value));
-        viewModel.getInverseKinematicsModelLiveData().observeForever(value -> inverseKinematicsModels.add(value));
+        viewModel.getAlphaLiveData().observeForever(value -> xValues.add(value));
+        viewModel.getGammaLiveData().observeForever(value -> yValues.add(value));
+        viewModel.getBetaLiveData().observeForever(value -> zValues.add(value));
+        viewModel.getZeroMqModelLiveData().observeForever(value -> inverseKinematicsModels.add(value));
     }
 
     @Test
