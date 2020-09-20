@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".ui.motion.MotionControlActivity">
+
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/days_one"
+        android:text="ABOUT"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="15pt"
+        app:layout_constraintEnd_toStartOf="@id/logo"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_nade_logo_01"
+        app:layout_constraintBottom_toBottomOf="@id/about"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/about"
+        app:layout_constraintTop_toTopOf="@id/about"
+        tools:ignore="ContentDescription" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardElevation="6dp"
+        app:layout_constraintBottom_toTopOf="@id/pybullet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/antic"
+            android:padding="10dp"
+            android:text="BulletBot is an app designed for controlling robots remotely and powered by the pyBullet simulation engine. Through a simple and intuitive user interface the app enables inverse kinematics, 360° motion control and more, performed in real time on a pyBullet simulation of the Kuka robot."
+            android:textColor="@color/colorPrimary"
+            android:textSize="9pt" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pybullet"
+        android:layout_width="0dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardElevation="6dp"
+        app:layout_constraintBottom_toTopOf="@id/see_docs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/desc">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bullet_dot" />
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/see_docs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See Docs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/see_demo"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/see_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Watch Demo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/see_docs" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
