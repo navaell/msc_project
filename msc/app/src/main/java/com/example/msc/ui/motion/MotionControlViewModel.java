@@ -24,9 +24,9 @@ public class MotionControlViewModel extends ViewModel {
     private boolean toggleEnabled = false;
 
     // LiveData Observers
-    private final MutableLiveData<String> alphaLiveData = new MutableLiveData<>();
-    private final MutableLiveData<String> gammaLiveData = new MutableLiveData<>();
-    private final MutableLiveData<String> betaLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> alphaLiveData = new MutableLiveData<>("N/A");
+    private final MutableLiveData<String> gammaLiveData = new MutableLiveData<>("N/A");
+    private final MutableLiveData<String> betaLiveData = new MutableLiveData<>("N/A");
     private final MutableLiveData<Integer> combinedColour = new MutableLiveData<>();
     private final MutableLiveData<InverseKinematicsModel> zeroMqModelLiveData = new MutableLiveData<>();
 

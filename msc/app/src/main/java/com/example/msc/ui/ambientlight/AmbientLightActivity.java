@@ -19,6 +19,9 @@ import com.suke.widget.SwitchButton;
 
 import java.util.Locale;
 
+/**
+ * Activity used for the ambient light feature.
+ */
 public class AmbientLightActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mLight;
@@ -26,15 +29,19 @@ public class AmbientLightActivity extends AppCompatActivity implements SensorEve
 
     private boolean isToggleEnabled = false;
 
+    /**
+     * Part of Activity's Lifecycle.
+     */
     @Override
     public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_light_sensor);
+        setContentView(R.layout.activity_ambient_light);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         textView = (TextView)findViewById(R.id.sensor_data);
 
+        // switch button - sets toggle listener
         final SwitchButton switchButton = findViewById(R.id.toggle);
         switchButton.setOnCheckedChangeListener((view, isChecked) -> {
             isToggleEnabled = isChecked;
@@ -42,6 +49,7 @@ public class AmbientLightActivity extends AppCompatActivity implements SensorEve
             textView.setText("N/A");
         });
 
+        // information button - sets click listener to open popup
         final ImageView infoButton = findViewById(R.id.info);
         infoButton.setOnClickListener(v -> new AlertDialog.Builder(this)
                 .setTitle("Information")
@@ -59,9 +67,11 @@ public class AmbientLightActivity extends AppCompatActivity implements SensorEve
 
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Do something here if sensor accuracy changes.
     }
 
+    /**
+     * On a sensor change and if the toggle button is enabled, display the value of lux up to 2 d.p
+     */
     @Override
     public final void onSensorChanged(SensorEvent event) {
         if (isToggleEnabled) {
@@ -73,13 +83,19 @@ public class AmbientLightActivity extends AppCompatActivity implements SensorEve
             textView.setText(String.format(Locale.UK, "%.2f lux", lux));
         }
     }
-
+    /**
+     * Part of Activity's Lifecycle. It subscribes this activity to the sensorManager for periodic
+     *  light sensor updates.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, mLight, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    /**
+     * Part of Activity's Lifecycle. It unregisters the listener receiving sensor updates.
+     */
     @Override
     protected void onPause() {
         super.onPause();

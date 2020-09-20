@@ -22,6 +22,9 @@ public class InverseKinematicsModel {
     @SerializedName("c_orient")
     private final double gammaOrientation;
 
+    /**
+     * Constructor
+     */
     public InverseKinematicsModel(RequestType type,
                                   double xCoordinate,
                                   double yCoordinate,

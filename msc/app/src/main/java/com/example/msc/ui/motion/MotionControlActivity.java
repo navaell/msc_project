@@ -65,9 +65,11 @@ public class MotionControlActivity extends AppCompatActivity {
                 newData -> new ZeroMQMessageAsyncTask(viewModel.getOnMessageSent()).execute(gson.toJson(newData))
         );
 
+        // toggle button
         final SwitchButton switchButton = findViewById(R.id.toggle);
         switchButton.setOnCheckedChangeListener((view, isChecked) -> viewModel.onButtonToggled(isChecked));
 
+        // information pop-up button
         final ImageView infoButton = findViewById(R.id.info);
         infoButton.setOnClickListener(v -> new AlertDialog.Builder(this)
                 .setTitle("Information")

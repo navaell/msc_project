@@ -18,8 +18,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * Activity used for the Inverse Kinematics feature
+ */
 public class InverseKinematicsActivity extends AppCompatActivity {
 
+    //class fields for every coordinate(xCoord,yCoord,zCoord) and orientation(aOrient, bOrient, cOrient)
     private TextInputEditText xCoord;
     private TextInputEditText yCoord;
     private TextInputEditText zCoord;
@@ -28,10 +32,16 @@ public class InverseKinematicsActivity extends AppCompatActivity {
     private TextInputEditText cOrient;
     private Gson gson;
 
+    /**
+     * Part of Activity's Lifecycle. It sets the UI from the XML
+     * and sets onClickListener for the submit button that the user presses
+     * to submit the inverse kinematics.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inverse_kinematics);
+        // submit button for sending the inverse kinematics to the simulation
         final Button button = findViewById(R.id.submit);
         button.setOnClickListener(v -> {
             try {
@@ -48,6 +58,7 @@ public class InverseKinematicsActivity extends AppCompatActivity {
         bOrient = findViewById(R.id.beta_text);
         cOrient = findViewById(R.id.theta_text);
 
+        // information pop-up button
         final ImageView infoButton = findViewById(R.id.info);
         infoButton.setOnClickListener(v -> new AlertDialog.Builder(this)
                 .setTitle("Information")
@@ -66,6 +77,12 @@ public class InverseKinematicsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Assembles the inverse kinematics info into {@link InverseKinematicsModel} and
+     * then converts it to a JSON string
+     *
+     * @return the inverse kinematics model as a json
+     */
     protected String getTaskInput() {
         final InverseKinematicsModel model = new InverseKinematicsModel(
                 RequestType.INVERSE_KINEMATICS,
