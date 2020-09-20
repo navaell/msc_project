@@ -9,7 +9,11 @@ receivedNewKinematics = False
 newKinematics = []
 
 
-def thread_function():
+def zero_mq_server():
+    """
+    This function starts the ZeroMQ server that listens to commands from the mobile phone. This should be started
+    on a new thread
+    """
     global receivedNewKinematics
     global newKinematics
     context = zmq.Context()
@@ -25,9 +29,11 @@ def thread_function():
         socket.send(b"Received")
 
 
-x = threading.Thread(target=thread_function)
-x.start()
+# start the zero mq server on a new thread
+zero_mq_server_thread = threading.Thread(target=zero_mq_server)
+zero_mq_server_thread.start()
 
+# start PyBullet
 p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.loadURDF("plane.urdf", [0, 0, -0.3])
@@ -40,21 +46,23 @@ p.setRealTimeSimulation(0)
 
 
 def execute_inverse_kinematics(x, y, z, alpha, theta, psy):
+    """
+    Executes the inverse kinematics for a given position and orientation
+    """
     pos = [x, y, z]
     orientation = p.getQuaternionFromEuler([alpha, theta, psy])
-    jointPoses = p.calculateInverseKinematics(robot, kukaEndEffectorIndex, pos, targetOrientation=orientation)
+    joint_poses = p.calculateInverseKinematics(robot, kukaEndEffectorIndex, pos, targetOrientation=orientation)
 
     for i in range(numJoints):
         p.setJointMotorControl2(bodyIndex=robot, jointIndex=i, controlMode=p.POSITION_CONTROL,
-                                targetPosition=jointPoses[i])
+                                targetPosition=joint_poses[i])
 
 
+# On a loop, keep running the simulation while checking if new commands have been received from BulletBot. If new
+#  commands have been received, execute them
 while True:
     if receivedNewKinematics:
         receivedNewKinematics = False
         execute_inverse_kinematics(newKinematics[0], newKinematics[1], newKinematics[2], newKinematics[3],
                                    newKinematics[4], newKinematics[5])
     p.stepSimulation()
-    # time.sleep(1./10.)
-
-p.disconnect()
